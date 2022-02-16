@@ -16,12 +16,11 @@ import random
 from glob import glob
 import os
 import sys
-currentdir = os.path.dirname(os.path.realpath(__file__))
-parentdir = os.path.dirname(currentdir)
-sys.path.append(parentdir)
+# currentdir = os.path.dirname(os.path.realpath(__file__))
+# parentdir = os.path.dirname(currentdir)
+# sys.path.append(parentdir)
 
-from mastering_manipulator.manipulator import Mastering_Effects_Manipulator
-from loader_utils import *
+from Self_Supervised_Music_Remastering_System.data_loader.loader_utils import *
 
 
 
@@ -303,7 +302,7 @@ if __name__ == '__main__':
         start_time_loader = time.time()
         for step, (input_track, reference_track, song_name) in enumerate(train_loader):
             print(f'Epoch {epoch+1}/{total_epochs}\tStep {step+1}/{len(train_loader)}')
-            print(input_track.shape, reference_track.shape, f"time taken: {time.time()-start_time_loader:.4f}")
+            print(input_track.shape, reference_track.shape, song_name, f"time taken: {time.time()-start_time_loader:.4f}")
             start_time_loader = time.time()
 
 

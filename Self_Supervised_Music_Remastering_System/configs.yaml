@@ -1,0 +1,56 @@
+# model architecture configurations
+
+# Mastering Cloner
+Mastering_Cloner:
+
+  default:
+    channels: [32, 32, 64, 64, 128, 128, 256, 256, 512, 512, 1024, 1024]
+    kernels: [25, 25, 25, 25, 15, 15, 15, 15, 10, 10, 10, 10]
+    strides: [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+    dilation: [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+    cond_place: "dec"
+    cond_layers: "ALL"
+    condition_dimension: 2048
+    using_conv_block: None
+    deconv_method: "alias_free_up"
+    downconv_method: "alias_free_down"
+    conv_layer_num: 1
+    bias: True
+    norm: None
+    activation: "lrelu"
+    last_activation: None
+    last_conv_layers: True
+
+
+
+# Discriminator
+Projection_Discriminator_2D:
+
+  default:
+    channels: [64, 64, 256, 256, 512, 1024]
+    kernels: [5, 5, 3, 3, 3, 3]
+    strides: [2, 2, 2, 2, 2, 2]
+    dilation: [1, 1, 1, 1, 1, 1]
+    condition_dimension: 2048
+    using_conv_block: "None"
+    conv_layer_num: 2
+    bias: True
+    norm: None
+    activation: "relu"
+    last_activation: "relu"
+
+
+
+# Music Effects Encoder
+Effects_Encoder:
+
+  default:
+    channels: [16, 32, 64, 128, 256, 256, 512, 512, 1024, 1024, 2048, 2048]
+    kernels: [25, 25, 15, 15, 10, 10, 10, 10, 5, 5, 5, 5]
+    strides: [4, 4, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1]
+    dilation: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    z_dim: 512
+    bias: True
+    norm: 'batch'
+    activation: "relu"
+

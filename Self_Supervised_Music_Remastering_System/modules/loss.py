@@ -7,7 +7,7 @@ import torch.nn.functional as F
 import torch.nn as nn
 
 from training_utils import *
-from front_back_end import *
+from front_end import *
 
 
 
@@ -88,7 +88,7 @@ class RMSLoss(nn.Module):
 # Multi-Scale Spectral Loss proposed at the paper "DDSP: DIFFERENTIABLE DIGITAL SIGNAL PROCESSING" (https://arxiv.org/abs/2001.04643)
 # we extend this loss by applying it to mid/side channels
 class MultiScale_Spectral_Loss_MidSide_DDSP(nn.Module):
-    def __init__(self, mode='midside', reduce=True, n_filters=None, windows_size=None, hops_size=None, window="hann", eps=1e-7):
+    def __init__(self, mode='midside', reduce=True, n_filters=None, windows_size=None, hops_size=None, window="hann", eps=1e-7, device=torch.device("cpu")):
         super(MultiScale_Spectral_Loss_MidSide_DDSP, self).__init__()
         self.mode = mode
         self.eps = eps
@@ -106,7 +106,7 @@ class MultiScale_Spectral_Loss_MidSide_DDSP(nn.Module):
             cur_scale = {'window_size' : float(windows_size[i])}
             if self.mode=='midside':
                 cur_scale['front_end'] = FrontEnd(channel='mono', n_fft=n_filters[i], hop_length=hops_size[i], win_length=windows_size[i], window=window)
-            elif self.mode=='mag':
+            elif self.mode=='ori':
                 cur_scale['front_end'] = FrontEnd(channel='stereo', n_fft=n_filters[i], hop_length=hops_size[i], win_length=windows_size[i], window=window)
             self.multiscales.append(cur_scale)
 
@@ -185,10 +185,12 @@ def gen_hinge(dis_fake, dis_real=None):
 # Class of available loss functions
 class Loss:
     def __init__(self, args, reduce=True):
-        self.mse = nn.MSELoss(reduce=reduce)
-        self.l1 = nn.L1Loss(reduce=reduce)
-        self.ntxent = NT_Xent(args.total_batch//len(args.using_gpu.split(",")), args.temperature, world_size=len(args.using_gpu.split(",")))
-        self.multi_scale_spectral_midside = MultiScale_Spectral_Loss_MidSide(mode='midside', eps=args.eps)
-        self.multi_scale_spectral_ori = MultiScale_Spectral_Loss_MidSide(mode='ori', eps=args.eps)
+        device = torch.device("cpu")
+        if torch.cuda.is_available():
+            device = torch.device("cuda:0")
+
+        self.ntxent = NT_Xent(args.batch_size//len(args.using_gpu.split(",")), args.temperature, world_size=len(args.using_gpu.split(",")))
+        self.multi_scale_spectral_midside = MultiScale_Spectral_Loss_MidSide(mode='midside', eps=args.eps, device=device)
+        self.multi_scale_spectral_ori = MultiScale_Spectral_Loss_MidSide(mode='ori', eps=args.eps, device=device)
         self.gain = RMSLoss(reduce=reduce)
 

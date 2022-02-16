@@ -9,11 +9,12 @@ import torch.nn.init as init
 
 import os
 import sys
-currentdir = os.path.dirname(os.path.realpath(__file__))
-parentdir = os.path.dirname(currentdir)
-sys.path.append(parentdir)
+# currentdir = os.path.dirname(os.path.realpath(__file__))
+# parentdir = os.path.dirname(currentdir)
+# sys.path.append(parentdir)
 
-from network.utils import *
+# from network.utils import *
+from Self_Supervised_Music_Remastering_System.networks.utils import *
 
 
 

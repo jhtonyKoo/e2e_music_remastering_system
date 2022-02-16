@@ -1,5 +1,6 @@
 """
     Implementation of the processor 'multiband stereo imager'
+    The authors thank Sungho Lee (sh-lee@snu.ac.kr) with the help of implementation.
 """
 from scipy import signal
 import numpy as np
