@@ -1,5 +1,5 @@
 """ 
-    Source code of inference procedure of the task 'End-to-end Music Remastering System Using Self-supervised and Adversarial Training'
+    Source code of inference procedure of the paper 'End-to-end Music Remastering System Using Self-supervised and Adversarial Training'
 """
 import os
 import soundfile as sf
@@ -16,8 +16,8 @@ from Self_Supervised_Music_Remastering_System.networks import *
 class Remastering_System_Inference:
     def __init__(self, args):
         self.device = torch.device("cpu")
-        # if torch.cuda.is_available():
-        #     self.device = torch.device("cuda:0")
+        if torch.cuda.is_available():
+            self.device = torch.device("cuda:0")
         
         # inference computational hyperparameters
         self.segment_length = args.segment_length
@@ -134,7 +134,7 @@ class Remastering_System_Inference:
         else:
             pad_length = segment_length - target_song.shape[-1] % segment_length
             target_song = torch.cat((target_song, torch.zeros(2, pad_length)), axis=-1)
-            
+
         # segmentize according to the given segment_length
         whole_batch_data = []
         batch_wise_data = []

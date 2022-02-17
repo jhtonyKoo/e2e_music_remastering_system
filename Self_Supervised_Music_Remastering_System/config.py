@@ -1,11 +1,5 @@
 import argparse
-import os
-import random
-import sys
-import torch
 import yaml
-import numpy as np
-import wandb
 
 parser = argparse.ArgumentParser()
 
@@ -42,7 +36,8 @@ def print_args(params):
 
 reload_args = parser.add_argument_group('Reload args')
 reload_args.add_argument('--ckpt_dir', type=str, default="model_checkpoints/", help="reloading network architecture")
-reload_args.add_argument('--ckpt_path', type=str, default="mastering_cloner.pt", help="reloading network architecture")
+# reload_args.add_argument('--ckpt_path', type=str, default="mastering_cloner.pt", help="reloading network architecture")
+reload_args.add_argument('--ckpt_path', type=str, default="wider3_newmee_fixed_af_mssddsp_re_cloner_1000.pt", help="reloading network architecture")
 reload_args.add_argument('--ckpt_path_feat', type=str, default="music_effects_encoder_1000.pt", help="reloading network architecture")
 
 
@@ -50,8 +45,10 @@ base_args = parser.add_argument_group('Base args')
 base_args.add_argument('--output_dir', type=str, default="inference_samples/")
 base_args.add_argument('--data_dir_test', type=str, default="inference_samples/")
 base_args.add_argument('--data_dir_feat_test', type=str)
-base_args.add_argument('--data_dir', type=str)
-base_args.add_argument('--data_dir_feat', type=str)
+# base_args.add_argument('--data_dir', type=str)
+# base_args.add_argument('--data_dir_feat', type=str)
+base_args.add_argument('--data_dir', type=str, default="/data3/btsd/")
+base_args.add_argument('--data_dir_feat', type=str, default="/data2/jamendo/wav_44/")
 
 train_args = parser.add_argument_group('Train args')
 train_args.add_argument('--random_seed', type=int, default=111)
@@ -65,6 +62,7 @@ data_args = parser.add_argument_group('Data args')
 data_args.add_argument('--sample_rate', type=int, default=44100)
 data_args.add_argument('--segment_length', type=int, default=2**17)
 data_args.add_argument('--max_segment_length_feat', type=int, default=44100*5)
+data_args.add_argument('--reference_length', type=int, default=None)
 
 network_args = parser.add_argument_group('Network args')
 network_args.add_argument('--network_arc_feat', type=str, default='Effects_Encoder')

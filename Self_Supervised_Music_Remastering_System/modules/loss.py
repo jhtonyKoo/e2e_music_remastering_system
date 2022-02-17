@@ -64,7 +64,8 @@ class NT_Xent(nn.Module):
 
 
 
-# Root Mean Squared Loss that penalizes the volume factor with non-linearlity
+# Root Mean Squared Loss
+#   penalizes the volume factor with non-linearlity
 class RMSLoss(nn.Module):
     def __init__(self, reduce, loss_type="l2"):
         super(RMSLoss, self).__init__()
@@ -86,7 +87,7 @@ class RMSLoss(nn.Module):
 
 
 # Multi-Scale Spectral Loss proposed at the paper "DDSP: DIFFERENTIABLE DIGITAL SIGNAL PROCESSING" (https://arxiv.org/abs/2001.04643)
-# we extend this loss by applying it to mid/side channels
+#   we extend this loss by applying it to mid/side channels
 class MultiScale_Spectral_Loss_MidSide_DDSP(nn.Module):
     def __init__(self, mode='midside', reduce=True, n_filters=None, windows_size=None, hops_size=None, window="hann", eps=1e-7, device=torch.device("cpu")):
         super(MultiScale_Spectral_Loss_MidSide_DDSP, self).__init__()

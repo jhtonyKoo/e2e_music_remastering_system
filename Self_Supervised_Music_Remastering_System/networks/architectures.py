@@ -9,11 +9,9 @@ import torch.nn.init as init
 
 import os
 import sys
-# currentdir = os.path.dirname(os.path.realpath(__file__))
-# parentdir = os.path.dirname(currentdir)
-# sys.path.append(parentdir)
+currentdir = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(os.path.dirname(os.path.dirname(currentdir)))
 
-# from network.utils import *
 from Self_Supervised_Music_Remastering_System.networks.utils import *
 
 
@@ -221,8 +219,6 @@ class Projection_Discriminator_2D(nn.Module):
                     nn.Linear(1024, config["channels"][-1])
                 )
         )
-        self.sigmoid = nn.Sigmoid()
-        self.tanh = nn.Tanh()
 
     
     # network forward operation
@@ -241,7 +237,7 @@ class Projection_Discriminator_2D(nn.Module):
 
         c = torch.sum(pooled*ref_embedding_out, dim=1, keepdim=True)
 
-        return self.tanh(output+c)
+        return output+c
 
 
 
@@ -277,11 +273,7 @@ class Music_Effects_Encoder(nn.Module):
     def forward(self, input):
         enc_output = self.encoder(input)
         glob_pooled = self.glob_pool(enc_output).squeeze(-1)
-
-        if self.reload_ckpt:
-            output = self.fc(glob_pooled)
-        else:
-            output = None
+        output = self.fc(glob_pooled) if self.reload_ckpt else None
 
         # outputs z and c feature
         return output, glob_pooled
@@ -293,7 +285,7 @@ class Music_Effects_Encoder(nn.Module):
 if __name__ == '__main__':
     ''' check model I/O shape '''
     import yaml
-    with open('configs.yaml', 'r') as f:
+    with open('Self_Supervised_Music_Remastering_System/configs.yaml', 'r') as f:
         configs = yaml.load(f)
 
     batch_size = 32

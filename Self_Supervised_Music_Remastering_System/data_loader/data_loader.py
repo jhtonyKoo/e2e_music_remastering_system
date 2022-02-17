@@ -8,19 +8,20 @@ from torch.utils.data import DataLoader
 from torch.utils.data import Dataset
 
 import numpy as np
-import soundfile as sf
 import wave
 import time
 import random
-
 from glob import glob
+
 import os
 import sys
-# currentdir = os.path.dirname(os.path.realpath(__file__))
-# parentdir = os.path.dirname(currentdir)
-# sys.path.append(parentdir)
+currentdir = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(os.path.dirname(os.path.dirname(currentdir)))
 
 from Self_Supervised_Music_Remastering_System.data_loader.loader_utils import *
+from Self_Supervised_Music_Remastering_System.mastering_manipulator import Mastering_Effects_Manipulator
+
+
 
 
 
@@ -257,15 +258,15 @@ if __name__ == '__main__':
     """
     Test code of data loaders
     """
-    from config import args
+    from Self_Supervised_Music_Remastering_System.config import args
     print('--- checking dataset... ---')
 
     total_epochs = 2
     bs = 4
     step_size = 10
     collate_class = Collate_Variable_Length_Segments(args)
-
     
+
     ### Music Effects Encoder loaders
     print('\n========== Music Effects Encoder ==========')
     dataset = Song_Dataset(args, mode='train')
@@ -301,6 +302,7 @@ if __name__ == '__main__':
     for epoch in range(total_epochs):
         start_time_loader = time.time()
         for step, (input_track, reference_track, song_name) in enumerate(train_loader):
+            print(step)
             print(f'Epoch {epoch+1}/{total_epochs}\tStep {step+1}/{len(train_loader)}')
             print(input_track.shape, reference_track.shape, song_name, f"time taken: {time.time()-start_time_loader:.4f}")
             start_time_loader = time.time()
