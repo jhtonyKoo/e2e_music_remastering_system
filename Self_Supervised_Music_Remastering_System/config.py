@@ -36,8 +36,7 @@ def print_args(params):
 
 reload_args = parser.add_argument_group('Reload args')
 reload_args.add_argument('--ckpt_dir', type=str, default="model_checkpoints/", help="reloading network architecture")
-# reload_args.add_argument('--ckpt_path', type=str, default="mastering_cloner.pt", help="reloading network architecture")
-reload_args.add_argument('--ckpt_path', type=str, default="wider3_newmee_fixed_af_mssddsp_re_cloner_1000.pt", help="reloading network architecture")
+reload_args.add_argument('--ckpt_path', type=str, default="mastering_cloner.pt", help="reloading network architecture")
 reload_args.add_argument('--ckpt_path_feat', type=str, default="music_effects_encoder_1000.pt", help="reloading network architecture")
 
 
@@ -45,10 +44,8 @@ base_args = parser.add_argument_group('Base args')
 base_args.add_argument('--output_dir', type=str, default="inference_samples/")
 base_args.add_argument('--data_dir_test', type=str, default="inference_samples/")
 base_args.add_argument('--data_dir_feat_test', type=str)
-# base_args.add_argument('--data_dir', type=str)
-# base_args.add_argument('--data_dir_feat', type=str)
-base_args.add_argument('--data_dir', type=str, default="/data3/btsd/")
-base_args.add_argument('--data_dir_feat', type=str, default="/data2/jamendo/wav_44/")
+base_args.add_argument('--data_dir', type=str)
+base_args.add_argument('--data_dir_feat', type=str)
 
 train_args = parser.add_argument_group('Train args')
 train_args.add_argument('--random_seed', type=int, default=111)
