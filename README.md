@@ -6,8 +6,8 @@ We provide inference code of the proposed system, which targets to alter the mas
 
 
 
-[![arXiv](https://img.shields.io/badge/arXiv-****.*****-b31b1b.svg)](https://arxiv.org/)
-[![Demo Page](https://img.shields.io/badge/Demo%20Page-****.*****-green.svg)](https://dg22302.github.io/MusicRemasteringSystem/)
+[![arXiv](https://img.shields.io/badge/arXiv-2202.08520-b31b1b.svg)](https://arxiv.org/abs/2202.08520)
+[![Demo Page](https://img.shields.io/badge/Demo%20Page-2202.08520-green.svg)](https://dg22302.github.io/MusicRemasteringSystem/)
 
 
 
